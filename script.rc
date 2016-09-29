@@ -28,7 +28,7 @@ mkdir -p /etc/apache2/ssl/key
 cp vhost1.key /etc/apache2/ssl/key
 mv apache2.conf /etc/apache2/
 
-cp mysite/ /home/student/
+cp -R mysite/ /home/student/
 chown -R www-data:www-data /home/student/mysite
 
 apache2ctl restart
