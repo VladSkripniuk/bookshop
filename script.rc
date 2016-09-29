@@ -18,7 +18,7 @@ cd mod_wsgi-4.5.7
 ./configure
 make
 make install
-cd..
+cd ..
 rm -R mod_wsgi-4.5.7/
 rm 4.5.7.tar.gz
 
