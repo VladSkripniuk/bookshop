@@ -26,7 +26,8 @@ mkdir -p /etc/apache2/ssl/crt
 cp vhost1.crt /etc/apache2/ssl/crt
 mkdir -p /etc/apache2/ssl/key
 cp vhost1.key /etc/apache2/ssl/key
-mv apache2.conf /etc/apache2/
+cp apache2.conf /etc/apache2/
+cp ports.conf /etc/apache2/
 
 cp -R mysite/ /home/student/
 chown -R www-data:www-data /home/student/mysite
