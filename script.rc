@@ -1,0 +1,34 @@
+#!/bin/sh
+
+apt-get purge -y mysql*
+apt-get purge -y nginx nginx-common
+apt-get autoremove -y
+apt-get clean
+apt-get install -y apache2 apache2-dev
+apt-get install -y python-dev
+
+easy_install -U pip
+/usr/local/bin/pip2 install django==1.8
+/usr/local/bin/pip2 install python-social-auth
+/usr/local/bin/pip2 install django-paypal
+
+wget https://github.com/GrahamDumpleton/mod_wsgi/archive/4.5.7.tar.gz
+tar xvfz 4.5.7.tar.gz
+cd mod_wsgi-4.5.7
+./configure
+make
+make install
+cd..
+rm -R mod_wsgi-4.5.7/
+rm 4.5.7.tar.gz
+
+mkdir -p /etc/apache2/ssl/crt
+cp vhost1.crt /etc/apache2/ssl/crt
+mkdir -p /etc/apache2/ssl/key
+cp vhost1.key /etc/apache2/ssl/key
+mv apache2.conf /etc/apache2/
+
+cp mysite/ /home/student/
+chown -R www-data:www-data /home/student/mysite
+
+apache2ctl restart

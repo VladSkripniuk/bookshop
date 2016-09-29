@@ -1,0 +1,11 @@
+{% for row in filtered_objects_grouped_into_rows %}
+	<div class="row">
+		{% for book in row %}
+			<div class="col-md-{{ width_for_book }}" style="padding: 30px;">
+				<a href="/book/{{ book.id }}"><img src="{{ book.cover.url }}"
+				alt="cover" class="img-responsive" style="max-height: 300px; height: 300px;"></a>
+				<a href="/book/{{ book.id }}"><h2>{{ book.title }}</h2></a>
+			</div> 
+		{% endfor %}
+	</div>
+{% endfor %}
