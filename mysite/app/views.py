@@ -146,9 +146,7 @@ def paypal_success(request):
         purchase.user = request.user
         purchase.book = Book.objects.get(id = book_id)
         purchase.save()
-    #purchased_books = [purchase.book for purchase in Purchased.objects.filter(user=request.user).distinct()]
-    redirect('profile')
-    #ret (request, 'app/profile.html', {'cart': cart, 'purchased_books': purchased_books})
+    return redirect('profile')
 
 @login_required
 def paypal_pay(request):
@@ -162,8 +160,8 @@ def paypal_pay(request):
         "currency_code": "RUB",
         "item_name": cart.books_ids_list(),
         "notify_url": reverse('paypal-ipn'),
-        "return_url": "http://localhost:8000/payment/success/",
-        "cancel_return": "http://localhost:8000/payment/",
+        "return_url": "https://localhost/payment/success/",
+        "cancel_return": "https://localhost/payment/",
         "custom": str(request.user.id)
     }
     # Create the instance.
@@ -183,6 +181,10 @@ def get_or_set_cart(request):
                     cart_iter.archive = True
                     cart_iter.save()
                 cart.user = request.user
+                purchased_books = [purchase.book for purchase in Purchased.objects.filter(user=request.user)]
+                for book in cart.books_list():
+                    if book in purchased_books:
+                        cart.book.remove(book)
                 cart.save()
             del request.session['token']
         else:
